@@ -43,7 +43,7 @@ public class EnemySpawner : MonoBehaviour
         while(guysSpawned < maxBadGuys ){
             yield return new WaitForSeconds(timeToSpawn);
             SpawnEnemy();
-            guysSpawned = CityManager.singleton.GetGuys().Count;
+            guysSpawned = CityManager.singleton.GetGuys().Count - 1;
         }
     }
 }
