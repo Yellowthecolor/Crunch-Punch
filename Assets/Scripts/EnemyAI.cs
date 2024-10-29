@@ -6,8 +6,6 @@ using UnityEngine.XR;
 
 public class EnemyAI : MonoBehaviour
 {
-    [SerializeField] string currentStateString;
-
     [SerializeField] Guy guy;
     [SerializeField] Guy opponent;
     [SerializeField] LayerMask opponentLayer;
@@ -31,7 +29,7 @@ public class EnemyAI : MonoBehaviour
 
     void IdleState(){
         if(stateTime == 0){
-            currentStateString = "IdleState";
+            //Do nothing atm, use in future.
         }
         if (FindTarget()){
             ChangeState(AttackState);
@@ -42,7 +40,6 @@ public class EnemyAI : MonoBehaviour
 
     bool FindTarget(){
         List<Guy> targets = CityManager.singleton.GetGuys();
-        Debug.Log(targets);
         foreach(Guy currentGuy in targets){
             if(currentGuy.tag != "Player"){
                 continue;

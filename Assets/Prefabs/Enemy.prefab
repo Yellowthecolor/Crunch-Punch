@@ -214,8 +214,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 15dd9a079d688452bba297ebfcb19993, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 1000
+  maxHealth: 50
   currentHealth: 100
+  healthRegen: 0
   speed: 50
   defaultSpeed: 20
   punchDamage: 10
@@ -259,7 +260,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c4cf084fe86b64166b1b4a7829e07087, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentStateString: 
   guy: {fileID: 1220899190937144149}
   opponent: {fileID: 0}
   opponentLayer:

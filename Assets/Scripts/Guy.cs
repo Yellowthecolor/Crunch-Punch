@@ -14,6 +14,9 @@ public class Guy : MonoBehaviour
     [Header("Stats")]
     [SerializeField] float maxHealth = 100;
     [SerializeField] float currentHealth = 100;
+    [SerializeField] float healthRegen;
+
+    bool isDead = false;
     [SerializeField] float speed;
     [SerializeField] float defaultSpeed = 50;
     [SerializeField] float punchDamage = 10;
@@ -49,6 +52,7 @@ public class Guy : MonoBehaviour
     void Start(){
         CityManager.singleton.RegisterGuy(this);
         speed = defaultSpeed;
+        currentHealth = maxHealth;
     }
 
     void FixedUpdate(){
@@ -89,6 +93,11 @@ public class Guy : MonoBehaviour
         Move(direction.normalized);
     }
 
+    public void PassiveRegen(){
+        healthRegen = (maxHealth - currentHealth)/10;
+        currentHealth += healthRegen;
+    }
+
     public void PunchAnimation(){
         if (currentAnimationState == punch || currentAnimationState == kick){
             return;
@@ -123,27 +132,30 @@ public class Guy : MonoBehaviour
         }
     }
 
-    void OnDrawGizmosSelected()
-    {
-        if(kickPoint == null) return;
-        if(punchPoint == null) return;
-
-        Gizmos.DrawWireSphere(kickPoint.position, kickRange);
-        Gizmos.DrawWireSphere(punchPoint.position, punchRange);
-    }
-
-
-
     public void TakeDamage(float damage){
         currentHealth -= damage;
 
         if (currentHealth > 0){
-            Debug.Log(currentHealth);
         } else {
-            Debug.Log("Dead");
+            isDead = true;
+            if (tag == "Player"){
+                CityManager.singleton.GameOver();
+            } else {
+                Destroy(gameObject);
+            }
         }
     }
-    
+    void OnDestroy()
+    {
+        CityManager.singleton.RemoveGuy(this);
+    }
+
+    public bool GetDeathStatus(){
+        return isDead;
+    }
+    public void SetDeathStatus(bool status){
+        isDead = status;
+    }
 
     public Vector3 GetPunchPosition(){
         return punchPoint.position;
@@ -157,4 +169,18 @@ public class Guy : MonoBehaviour
     public float GetKickRange(){
         return kickRange;
     }
+
+
+
+
+    void OnDrawGizmosSelected()
+    {
+        if(kickPoint == null) return;
+        if(punchPoint == null) return;
+
+        Gizmos.DrawWireSphere(kickPoint.position, kickRange);
+        Gizmos.DrawWireSphere(punchPoint.position, punchRange);
+    }
+
+
 }

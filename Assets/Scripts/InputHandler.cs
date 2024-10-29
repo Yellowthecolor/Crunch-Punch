@@ -22,6 +22,9 @@ public class InputHandler : MonoBehaviour
     }
 
     void FixedUpdate(){
+        if(playerGuy.GetDeathStatus()){
+            return;
+        }
 
         if (Input.GetButton("Punch")){
             playerGuy.PunchAnimation();

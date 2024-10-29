@@ -322,7 +322,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxHealth: 100
   currentHealth: 100
+  healthRegen: 0
   speed: 50
+  defaultSpeed: 50
   punchDamage: 10
   kickDamage: 20
   punchRange: 0.15

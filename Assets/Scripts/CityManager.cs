@@ -7,6 +7,7 @@ using Unity.VisualScripting;
 using UnityEditor.ShortcutManagement;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class CityManager : MonoBehaviour
 {
@@ -14,14 +15,16 @@ public class CityManager : MonoBehaviour
     public static CityManager singleton;
 
     [SerializeField] List<Guy> guys;
+    [SerializeField] Guy playerGuy;
     [SerializeField] float timeLimit;
     float currentTime = 0;
 
     [Header("Helpers")]
     [SerializeField] TextMeshProUGUI timerText;
-    
+    [SerializeField] GameObject gameOverPanel;
 
     void Awake(){
+        gameOverPanel.SetActive(false);
         guys = new List<Guy>();
         if (singleton == null){
             singleton = this;
@@ -43,20 +46,34 @@ public class CityManager : MonoBehaviour
         return guys;
     }
 
+    public void DestroyAllGuys(){
+        foreach(Guy guy in guys){
+            Destroy(guy.gameObject);
+        }
+    }
+
     
     IEnumerator GlobalTimerRoutine(){
-        while(currentTime < timeLimit){
+        while(currentTime < timeLimit || playerGuy.GetDeathStatus()){
             yield return new WaitForSeconds(1);
             currentTime++;
-
+            playerGuy.PassiveRegen();
             timerText.text = currentTime.ToString();
         }
+        playerGuy.SetDeathStatus(true);
         StopAllCoroutines();
+        CityManager.singleton.GameOver();
         yield return null;
+    }
+
+    public void GameOver(){
+        gameOverPanel.SetActive(true);
 
     }
 
-    void RestartGame(){
+    public void RestartGame(){
+        DestroyAllGuys();
         SceneManager.LoadScene("CityScene");
     }
+
 }
