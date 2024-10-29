@@ -62,7 +62,7 @@ public class CityManager : MonoBehaviour
         }
         playerGuy.SetDeathStatus(true);
         StopAllCoroutines();
-        CityManager.singleton.GameOver();
+        GameOver();
         yield return null;
     }
 
