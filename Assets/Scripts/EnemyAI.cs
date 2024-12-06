@@ -31,7 +31,10 @@ public class EnemyAI : MonoBehaviour
         if(stateTime == 0){
             //Do nothing atm, use in future.
         }
-        if (FindTarget()){
+        if (guy.GetInDamageStateBool()){
+            ChangeState(DamagedState);
+            return;
+        } if (FindTarget() && !guy.GetInDamageStateBool()){
             ChangeState(AttackState);
             return;
         }
@@ -59,6 +62,10 @@ public class EnemyAI : MonoBehaviour
         } else {
             guy.MoveToward(opponent.transform.position);
         }
+    }
+
+    void DamagedState(){
+        guy.Move(Vector3.zero);
     }
 
     void AITick(){

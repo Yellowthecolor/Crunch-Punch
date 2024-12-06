@@ -43,5 +43,8 @@ public class AnimationStateChanger : MonoBehaviour
         animator.SetTrigger(trigger);
     }
 
+    public void BooleanAnimation(String target, bool boolean){
+        animator.SetBool(target, boolean);
+    }
 
 }

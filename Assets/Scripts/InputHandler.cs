@@ -32,6 +32,15 @@ public class InputHandler : MonoBehaviour
         if (Input.GetButton("Kick")){
             playerGuy.KickAnimation();
         }
+        if (Input.GetButton("Block")){
+            playerGuy.SetBlockValue(true);
+        } else {
+            playerGuy.SetBlockValue(false);
+        }
+        playerGuy.BlockAnimation();
+
+
+
 
         Vector3 move = new Vector3(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
         move = move.normalized;

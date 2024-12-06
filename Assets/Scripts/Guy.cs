@@ -2,7 +2,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
-using Unity.PlasticSCM.Editor.WebApi;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -23,6 +22,8 @@ public class Guy : MonoBehaviour
     [SerializeField] float kickDamage = 20;
     [SerializeField] float punchRange = .15f;
     [SerializeField] float kickRange = .2f;
+    [SerializeField] float knockbackMultiplier = .01f;
+    [SerializeField] bool canMove = true;
     Vector3 movement = Vector3.zero;
 
     [Header("Attack Points")]
@@ -34,12 +35,18 @@ public class Guy : MonoBehaviour
     [SerializeField] SpriteRenderer spriteRenderer;
     [SerializeField] AnimationStateChanger animationStateChanger;
     [SerializeField] LayerMask opponentLayer;
+    [SerializeField] bool blockButtonValue;
+    [SerializeField] bool inDamageState;
 
     [Header("Animation States")]
     [SerializeField] String walk = "Walk";
     [SerializeField] String idle = "Idle";
     [SerializeField] String punch = "Punch";
     [SerializeField] String kick = "Kick";
+    [SerializeField] String block = "Block";
+    [SerializeField] String death = "Death";
+    [SerializeField] String damaged = "Damage";
+    [SerializeField] String dead = "Dead";
     String currentAnimationState = "Idle";
 
 
@@ -56,15 +63,15 @@ public class Guy : MonoBehaviour
     }
 
     void FixedUpdate(){
-        rigidBody.velocity = movement * speed * Time.fixedDeltaTime;
+        if (canMove){
+            rigidBody.velocity = movement * speed * Time.fixedDeltaTime;
+        }
 
         if (rigidBody.velocity.x == 0){
             //Do nothing
         } else if (rigidBody.velocity.x > 0) {
-            // spriteRenderer.flipX = false;
             transform.localScale = new Vector3(1,1,1);
         } else {
-            // spriteRenderer.flipX = true;
             transform.localScale = new Vector3(-1,1,1);
         }
             
@@ -73,12 +80,18 @@ public class Guy : MonoBehaviour
 
     public void Move(Vector3 newMove){
 
-        if (animationStateChanger.CheckCurrentAnimationState(punch) || animationStateChanger.CheckCurrentAnimationState(kick)){
+        if (!canMove 
+        || animationStateChanger.CheckCurrentAnimationState(punch) 
+        || animationStateChanger.CheckCurrentAnimationState(kick) 
+        || animationStateChanger.CheckCurrentAnimationState(damaged)
+        || animationStateChanger.CheckCurrentAnimationState(block)){
             return;
         }
+
         movement = newMove;
         if (movement != Vector3.zero){
-            speed = defaultSpeed;
+                ResetSpeed();
+ 
             currentAnimationState = walk;
             animationStateChanger.TriggerAnimation(walk);
         } else {
@@ -99,7 +112,7 @@ public class Guy : MonoBehaviour
     }
 
     public void PunchAnimation(){
-        if (currentAnimationState == punch || currentAnimationState == kick){
+        if (currentAnimationState == punch || currentAnimationState == kick || currentAnimationState == damaged){
             return;
         }
 
@@ -109,7 +122,7 @@ public class Guy : MonoBehaviour
     }
 
     public void KickAnimation(){
-        if (currentAnimationState == punch || currentAnimationState == kick){
+        if (currentAnimationState == punch || currentAnimationState == kick || currentAnimationState == damaged){
             return;
         }
 
@@ -118,36 +131,93 @@ public class Guy : MonoBehaviour
         speed = 1;
     }
 
+    public void BlockAnimation(){
+        if (currentAnimationState == punch || currentAnimationState == kick || currentAnimationState == damaged){
+            return;
+        }
+        if (blockButtonValue){
+            currentAnimationState = block;
+        } 
+        if (!blockButtonValue && currentAnimationState == block){
+            currentAnimationState = idle;
+            animationStateChanger.TriggerAnimation(idle);
+        }
+        
+        animationStateChanger.BooleanAnimation(block, blockButtonValue);
+    }
+
     public void Punch(){
         Collider2D[] hitOpponent = Physics2D.OverlapCircleAll(punchPoint.position, punchRange, opponentLayer);
         foreach(Collider2D opponent in hitOpponent){
-            opponent.GetComponent<Guy>().TakeDamage(punchDamage);
+            opponent.GetComponent<Guy>().TakeDamage(punchDamage, this.transform);
         }
     }
 
     public void Kick(){
         Collider2D[] hitOpponent = Physics2D.OverlapCircleAll(kickPoint.position, kickRange, opponentLayer);
         foreach(Collider2D opponent in hitOpponent){
-            opponent.GetComponent<Guy>().TakeDamage(kickDamage);
+            opponent.GetComponent<Guy>().TakeDamage(kickDamage, this.transform);
         }
     }
 
-    public void TakeDamage(float damage){
+    public void DamageAnimation(){
+        currentAnimationState=damaged;
+        animationStateChanger.TriggerAnimation(damaged);
+    }
+
+    public void DeathAnimation(){
+        currentAnimationState = death;
+        animationStateChanger.TriggerAnimation(death);
+    }
+
+    public void DeadAnimation(){
+        currentAnimationState = dead;
+        animationStateChanger.TriggerAnimation(dead);
+    }
+
+    public void TakeDamage(float damage, Transform opponent){
+        if (tag == "Player" && 
+        (currentAnimationState == block 
+        || currentAnimationState == damaged)){
+            return;
+        }
+ 
+        DamageAnimation();
         currentHealth -= damage;
+
+        StartCoroutine(Knockback(knockbackMultiplier, opponent));
 
         if (currentHealth > 0){
         } else {
             isDead = true;
             if (tag == "Player"){
+                DeathAnimation();
                 CityManager.singleton.GameOver();
+                DeadAnimation();
             } else {
-                Destroy(gameObject);
+                DeathAnimation();
+                DeadAnimation();
             }
         }
+
+        movement = Vector3.zero;
     }
+
+    void DestroyGuy(){
+        Destroy(gameObject);
+    }
+    
     void OnDestroy()
     {
         CityManager.singleton.RemoveGuy(this);
+    }
+
+    public void ResetSpeed(){
+        speed = defaultSpeed;
+    }
+
+    public void SetBlockValue(bool value){
+        blockButtonValue = value;
     }
 
     public bool GetDeathStatus(){
@@ -170,9 +240,41 @@ public class Guy : MonoBehaviour
         return kickRange;
     }
 
+    public float GetCurrentHealth(){
+        return currentHealth;
+    }
+
+    public void SetInDamageStateBool(){
+        if (GetCurrentHealth() > 0){
+            inDamageState = !inDamageState;
+        } else {
+            inDamageState = true;
+        }
+    }
+
+
+    public bool GetInDamageStateBool(){
+        return inDamageState;
+    }
 
 
 
+    // public void Knockback(float pushBack, Transform opponent) { 
+    //     canMove = false;
+    //     Vector3 direction = (opponent.transform.position - this.transform.position).normalized;w
+    //     rigidBody.AddForce(-direction.normalized * pushBack, ForceMode2D.Impulse);
+    // }
+
+    public IEnumerator Knockback(float pushBack, Transform opponent) { 
+        while(inDamageState) {
+            canMove = false;
+            Vector3 direction = (opponent.transform.position - this.transform.position).normalized;
+            rigidBody.AddForce(-direction.normalized * pushBack, ForceMode2D.Impulse);
+            yield return new WaitForFixedUpdate();
+        } 
+        canMove = true;
+    }
+  
     void OnDrawGizmosSelected()
     {
         if(kickPoint == null) return;
@@ -181,6 +283,4 @@ public class Guy : MonoBehaviour
         Gizmos.DrawWireSphere(kickPoint.position, kickRange);
         Gizmos.DrawWireSphere(punchPoint.position, punchRange);
     }
-
-
 }

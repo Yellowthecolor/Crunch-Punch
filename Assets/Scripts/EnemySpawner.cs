@@ -4,7 +4,6 @@ using System.Runtime.CompilerServices;
 using System.Threading;
 using Unity.VisualScripting;
 using UnityEditor.Rendering.Universal;
-using UnityEditor.SearchService;
 using UnityEngine;
 
 public class EnemySpawner : MonoBehaviour

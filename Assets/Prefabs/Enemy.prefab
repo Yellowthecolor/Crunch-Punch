@@ -78,6 +78,7 @@ GameObject:
   - component: {fileID: 8035810701554892772}
   - component: {fileID: 4533115159689579806}
   - component: {fileID: 5946117007846116434}
+  - component: {fileID: 8327737579812326837}
   m_Layer: 8
   m_Name: Enemy
   m_TagString: Enemy
@@ -191,7 +192,7 @@ Rigidbody2D:
   m_LinearDrag: 0
   m_AngularDrag: 0.05
   m_GravityScale: 0
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 6200000, guid: 8313f759c85d24d539890ded0eb16bfd, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -201,7 +202,7 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 1
-  m_Constraints: 0
+  m_Constraints: 4
 --- !u!114 &1220899190937144149
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -219,10 +220,12 @@ MonoBehaviour:
   healthRegen: 0
   speed: 50
   defaultSpeed: 20
+  canMove: 1
   punchDamage: 10
   kickDamage: 20
   punchRange: 0.15
   kickRange: 0.15
+  knockback: 0.2
   punchPoint: {fileID: 3156086438391062955}
   kickPoint: {fileID: 656467176546825513}
   spriteRenderer: {fileID: 4064077075575858506}
@@ -230,10 +233,16 @@ MonoBehaviour:
   opponentLayer:
     serializedVersion: 2
     m_Bits: 128
+  blockButtonValue: 0
+  inDamageState: 0
   walk: BadGuyWalk
   idle: BadGuyIdle
   punch: BadGuyPunch
   kick: BadGuyKick
+  block: Block
+  death: BadGuyDeath
+  damaged: BadGuyDamage
+  dead: BadGuyDead
 --- !u!114 &8035810701554892772
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -309,4 +318,49 @@ BoxCollider2D:
   m_AutoTiling: 0
   serializedVersion: 2
   m_Size: {x: 0.20699406, y: 0.609375}
+  m_EdgeRadius: 0
+--- !u!61 &8327737579812326837
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6072412568570775719}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: -0.27}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 0.453125, y: 0.609375}
+    newSize: {x: 0.453125, y: 0.609375}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 0.3, y: 0.08}
   m_EdgeRadius: 0
