@@ -220,12 +220,12 @@ MonoBehaviour:
   healthRegen: 0
   speed: 50
   defaultSpeed: 20
-  canMove: 1
   punchDamage: 10
   kickDamage: 20
   punchRange: 0.15
   kickRange: 0.15
-  knockback: 0.2
+  knockbackMultiplier: 0.01
+  canMove: 1
   punchPoint: {fileID: 3156086438391062955}
   kickPoint: {fileID: 656467176546825513}
   spriteRenderer: {fileID: 4064077075575858506}
@@ -362,5 +362,5 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.3, y: 0.08}
+  m_Size: {x: 0.17, y: 0.08}
   m_EdgeRadius: 0

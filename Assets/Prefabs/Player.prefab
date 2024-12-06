@@ -275,7 +275,7 @@ Rigidbody2D:
   m_UseAutoMass: 0
   m_Mass: 1
   m_LinearDrag: 0
-  m_AngularDrag: 0.05
+  m_AngularDrag: 0
   m_GravityScale: 0
   m_Material: {fileID: 6200000, guid: 1e6c611e75a644615863aeb491185470, type: 2}
   m_IncludeLayers:
@@ -326,12 +326,12 @@ MonoBehaviour:
   healthRegen: 0
   speed: 50
   defaultSpeed: 50
-  canMove: 1
   punchDamage: 10
   kickDamage: 20
   punchRange: 0.15
   kickRange: 0.2
-  knockback: 0.2
+  knockbackMultiplier: 0.01
+  canMove: 1
   punchPoint: {fileID: 3144413817668489196}
   kickPoint: {fileID: 7308392931999483925}
   spriteRenderer: {fileID: 4218712755769125678}
@@ -440,7 +440,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: -0.27}
+  m_Offset: {x: -0.03, y: -0.27}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -451,7 +451,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.25, y: 0.08}
+  m_Size: {x: 0.19, y: 0.08}
   m_EdgeRadius: 0
 --- !u!1 &8885169538511348401
 GameObject:

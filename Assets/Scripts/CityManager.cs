@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
+using Microsoft.Unity.VisualStudio.Editor;
 using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -66,8 +67,16 @@ public class CityManager : MonoBehaviour
     }
 
     public void GameOver(){
+        if (currentTime >= timeLimit){
+            //this doessnt work for sosme reason
+            // gameOverPanel.GetComponent<TextMeshProUGUI>().text = "You Survived!";
+        } 
         gameOverPanel.SetActive(true);
 
+    }
+
+    public void MainMenu(){
+        SceneManager.LoadScene("Main Menu");
     }
 
     public void RestartGame(){

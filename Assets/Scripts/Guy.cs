@@ -14,15 +14,18 @@ public class Guy : MonoBehaviour
     [SerializeField] float maxHealth = 100;
     [SerializeField] float currentHealth = 100;
     [SerializeField] float healthRegen;
+    [SerializeField] float healthRegenBonus = 0;
+    [SerializeField] float damageReduction = 1;
 
     bool isDead = false;
     [SerializeField] float speed;
     [SerializeField] float defaultSpeed = 50;
     [SerializeField] float punchDamage = 10;
     [SerializeField] float kickDamage = 20;
+    [SerializeField] float damageMultiplier = 1;
     [SerializeField] float punchRange = .15f;
     [SerializeField] float kickRange = .2f;
-    [SerializeField] float knockbackMultiplier = .01f;
+    [SerializeField] float knockbackMultiplier = 10f;
     [SerializeField] bool canMove = true;
     Vector3 movement = Vector3.zero;
 
@@ -64,7 +67,12 @@ public class Guy : MonoBehaviour
 
     void FixedUpdate(){
         if (canMove){
-            rigidBody.velocity = movement * speed * Time.fixedDeltaTime;
+            if (tag == "Player"){
+                rigidBody.velocity = movement * speed * Time.unscaledDeltaTime;
+
+            } else {
+                rigidBody.velocity = movement * speed * Time.fixedDeltaTime;
+            }
         }
 
         if (rigidBody.velocity.x == 0){
@@ -107,7 +115,7 @@ public class Guy : MonoBehaviour
     }
 
     public void PassiveRegen(){
-        healthRegen = (maxHealth - currentHealth)/10;
+        healthRegen = (maxHealth - currentHealth)/10 + healthRegenBonus;
         currentHealth += healthRegen;
     }
 
@@ -149,14 +157,14 @@ public class Guy : MonoBehaviour
     public void Punch(){
         Collider2D[] hitOpponent = Physics2D.OverlapCircleAll(punchPoint.position, punchRange, opponentLayer);
         foreach(Collider2D opponent in hitOpponent){
-            opponent.GetComponent<Guy>().TakeDamage(punchDamage, this.transform);
+            opponent.GetComponent<Guy>().TakeDamage(punchDamage * damageMultiplier, this.transform);
         }
     }
 
     public void Kick(){
         Collider2D[] hitOpponent = Physics2D.OverlapCircleAll(kickPoint.position, kickRange, opponentLayer);
         foreach(Collider2D opponent in hitOpponent){
-            opponent.GetComponent<Guy>().TakeDamage(kickDamage, this.transform);
+            opponent.GetComponent<Guy>().TakeDamage(kickDamage * damageMultiplier, this.transform);
         }
     }
 
@@ -183,7 +191,7 @@ public class Guy : MonoBehaviour
         }
  
         DamageAnimation();
-        currentHealth -= damage;
+        currentHealth -= damage * damageReduction;
 
         StartCoroutine(Knockback(knockbackMultiplier, opponent));
 
@@ -216,16 +224,35 @@ public class Guy : MonoBehaviour
         speed = defaultSpeed;
     }
 
-    public void SetBlockValue(bool value){
-        blockButtonValue = value;
-    }
-
     public bool GetDeathStatus(){
         return isDead;
     }
     public void SetDeathStatus(bool status){
         isDead = status;
     }
+
+    public void SetBlockValue(bool value){
+        blockButtonValue = value;
+    }
+
+    #region PowerUp Bonuses
+    public void SetDamageMultiplier(float value){
+        damageMultiplier += value;
+    }
+
+    public void SetDamageReduction(float value){
+        damageReduction += value;
+    }
+
+    public void SetDefaultSpeed(float value){
+        defaultSpeed += value;
+    }
+
+    public void SetHealthRegenBonus(float value){
+        healthRegenBonus += value;
+    }
+
+    #endregion PowerUp Bonusess
 
     public Vector3 GetPunchPosition(){
         return punchPoint.position;
@@ -256,14 +283,6 @@ public class Guy : MonoBehaviour
     public bool GetInDamageStateBool(){
         return inDamageState;
     }
-
-
-
-    // public void Knockback(float pushBack, Transform opponent) { 
-    //     canMove = false;
-    //     Vector3 direction = (opponent.transform.position - this.transform.position).normalized;w
-    //     rigidBody.AddForce(-direction.normalized * pushBack, ForceMode2D.Impulse);
-    // }
 
     public IEnumerator Knockback(float pushBack, Transform opponent) { 
         while(inDamageState) {
