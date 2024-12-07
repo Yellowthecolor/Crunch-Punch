@@ -74,13 +74,13 @@ GameObject:
   - component: {fileID: 4064077075575858506}
   - component: {fileID: 7781471647186707705}
   - component: {fileID: 4375256293347229954}
+  - component: {fileID: 5946117007846116434}
+  - component: {fileID: 8327737579812326837}
   - component: {fileID: 1220899190937144149}
   - component: {fileID: 8035810701554892772}
   - component: {fileID: 4533115159689579806}
-  - component: {fileID: 5946117007846116434}
-  - component: {fileID: 8327737579812326837}
-  - component: {fileID: 4285396162647118754}
   - component: {fileID: 2346185877512579447}
+  - component: {fileID: 4285396162647118754}
   m_Layer: 8
   m_Name: Enemy
   m_TagString: Enemy
@@ -205,92 +205,6 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 1
   m_Constraints: 4
---- !u!114 &1220899190937144149
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6072412568570775719}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 15dd9a079d688452bba297ebfcb19993, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  maxHealth: 50
-  currentHealth: 100
-  healthRegen: 0
-  healthRegenBonus: 0
-  damageReduction: 1
-  speed: 50
-  defaultSpeed: 20
-  punchDamage: 10
-  kickDamage: 20
-  damageMultiplier: 1
-  punchRange: 0.15
-  kickRange: 0.15
-  knockbackMultiplier: 0.01
-  canMove: 1
-  punchPoint: {fileID: 3156086438391062955}
-  kickPoint: {fileID: 656467176546825513}
-  spriteRenderer: {fileID: 4064077075575858506}
-  animationStateChanger: {fileID: 8035810701554892772}
-  opponentLayer:
-    serializedVersion: 2
-    m_Bits: 128
-  blockButtonValue: 0
-  inDamageState: 0
-  walk: BadGuyWalk
-  idle: BadGuyIdle
-  punch: BadGuyPunch
-  kick: BadGuyKick
-  block: Block
-  death: BadGuyDeath
-  damaged: BadGuyDamage
-  dead: BadGuyDead
-  sfxPlayer: {fileID: 4285396162647118754}
-  kickClips:
-  - {fileID: 8300000, guid: 341c81f167d9840169161fbc810d28d8, type: 3}
-  - {fileID: 8300000, guid: 576b28a3935db49a283d7470fad26be9, type: 3}
-  - {fileID: 8300000, guid: 75e829b491931494e913715752a812d6, type: 3}
-  - {fileID: 8300000, guid: 129b6ec59133d49a6ac2913cb325f6e2, type: 3}
-  - {fileID: 8300000, guid: cac13c9ea2a4941ab84d91205cda561e, type: 3}
-  - {fileID: 8300000, guid: 93ceb234f86a0462f94a38259aff6311, type: 3}
-  punchClips:
-  - {fileID: 8300000, guid: b1fddf1a3fd3446db846824ab5c808af, type: 3}
-  - {fileID: 8300000, guid: cbd14b8e098e243b8a554dbad2455571, type: 3}
-  - {fileID: 8300000, guid: 52cc72f1eb9c44f86bf405a37448c639, type: 3}
---- !u!114 &8035810701554892772
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6072412568570775719}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b0651c0e73c0d4fc189ba1bcfcb3ec53, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  animator: {fileID: 7781471647186707705}
-  state: Idle
---- !u!114 &4533115159689579806
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6072412568570775719}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c4cf084fe86b64166b1b4a7829e07087, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  guy: {fileID: 1220899190937144149}
-  opponent: {fileID: 0}
-  opponentLayer:
-    serializedVersion: 2
-    m_Bits: 128
 --- !u!61 &5946117007846116434
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -381,6 +295,118 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.17, y: 0.08}
   m_EdgeRadius: 0
+--- !u!114 &1220899190937144149
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6072412568570775719}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 15dd9a079d688452bba297ebfcb19993, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxHealth: 50
+  currentHealth: 100
+  healthRegen: 0
+  healthRegenBonus: 0
+  damageReduction: 1
+  speed: 50
+  defaultSpeed: 20
+  punchDamage: 10
+  kickDamage: 20
+  damageMultiplier: 1
+  punchRange: 0.15
+  kickRange: 0.15
+  knockbackMultiplier: 0.01
+  canMove: 1
+  punchPoint: {fileID: 3156086438391062955}
+  kickPoint: {fileID: 656467176546825513}
+  spriteRenderer: {fileID: 4064077075575858506}
+  animationStateChanger: {fileID: 8035810701554892772}
+  opponentLayer:
+    serializedVersion: 2
+    m_Bits: 128
+  blockButtonValue: 0
+  inDamageState: 0
+  walk: BadGuyWalk
+  idle: BadGuyIdle
+  punch: BadGuyPunch
+  kick: BadGuyKick
+  block: Block
+  death: BadGuyDeath
+  damaged: BadGuyDamage
+  dead: BadGuyDead
+  sfxPlayer: {fileID: 4285396162647118754}
+  kickClips:
+  - {fileID: 8300000, guid: 341c81f167d9840169161fbc810d28d8, type: 3}
+  - {fileID: 8300000, guid: 576b28a3935db49a283d7470fad26be9, type: 3}
+  - {fileID: 8300000, guid: 75e829b491931494e913715752a812d6, type: 3}
+  - {fileID: 8300000, guid: 129b6ec59133d49a6ac2913cb325f6e2, type: 3}
+  - {fileID: 8300000, guid: cac13c9ea2a4941ab84d91205cda561e, type: 3}
+  - {fileID: 8300000, guid: 93ceb234f86a0462f94a38259aff6311, type: 3}
+  punchClips:
+  - {fileID: 8300000, guid: b1fddf1a3fd3446db846824ab5c808af, type: 3}
+  - {fileID: 8300000, guid: cbd14b8e098e243b8a554dbad2455571, type: 3}
+  - {fileID: 8300000, guid: 52cc72f1eb9c44f86bf405a37448c639, type: 3}
+--- !u!114 &8035810701554892772
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6072412568570775719}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b0651c0e73c0d4fc189ba1bcfcb3ec53, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  animator: {fileID: 7781471647186707705}
+  state: Idle
+--- !u!114 &4533115159689579806
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6072412568570775719}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c4cf084fe86b64166b1b4a7829e07087, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  guy: {fileID: 1220899190937144149}
+  opponent: {fileID: 0}
+  opponentLayer:
+    serializedVersion: 2
+    m_Bits: 128
+--- !u!114 &2346185877512579447
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6072412568570775719}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b5790b3e61f314bf688cd8ffbef2c374, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ItemDropPrefab: {fileID: 8060476017915244920, guid: e2d36617cee604a14ac7351e41ee5336, type: 3}
+  itemList:
+  - {fileID: 11400000, guid: c8d6c5fcb85be4f71b32bafd1ce66a2d, type: 2}
+  - {fileID: 11400000, guid: fb3915c0bd3a3473a939e3b8439d52fa, type: 2}
+  - {fileID: 11400000, guid: 0a380857169164ebca447e3884fe038b, type: 2}
+  - {fileID: 11400000, guid: 3e19290a068c14aef8941455bbc5016b, type: 2}
+  - {fileID: 11400000, guid: b978da056896243d0b38d71605bdcb0a, type: 2}
+  - {fileID: 11400000, guid: 5e182d3d2a2f140e788d258019042700, type: 2}
+  - {fileID: 11400000, guid: e87f00e19a11a43a38ac5f6d0e2f1674, type: 2}
+  - {fileID: 11400000, guid: 95930f0c01de34f4fa80dd90bb564dbf, type: 2}
+  - {fileID: 11400000, guid: 634cfd3ff893a4609be35a7fd780a8d7, type: 2}
+  - {fileID: 11400000, guid: adbb0f4f1abcc4aad8210aaf952f236d, type: 2}
+  - {fileID: 11400000, guid: e73f0b33133b14817b85f0ce29004193, type: 2}
+  - {fileID: 11400000, guid: 2534c038ccc5644389ff2893179e2252, type: 2}
 --- !u!82 &4285396162647118754
 AudioSource:
   m_ObjectHideFlags: 0
@@ -477,29 +503,3 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!114 &2346185877512579447
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6072412568570775719}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b5790b3e61f314bf688cd8ffbef2c374, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ItemDropPrefab: {fileID: 8060476017915244920, guid: e2d36617cee604a14ac7351e41ee5336, type: 3}
-  itemList:
-  - {fileID: 11400000, guid: c8d6c5fcb85be4f71b32bafd1ce66a2d, type: 2}
-  - {fileID: 11400000, guid: fb3915c0bd3a3473a939e3b8439d52fa, type: 2}
-  - {fileID: 11400000, guid: 0a380857169164ebca447e3884fe038b, type: 2}
-  - {fileID: 11400000, guid: 3e19290a068c14aef8941455bbc5016b, type: 2}
-  - {fileID: 11400000, guid: b978da056896243d0b38d71605bdcb0a, type: 2}
-  - {fileID: 11400000, guid: 5e182d3d2a2f140e788d258019042700, type: 2}
-  - {fileID: 11400000, guid: e87f00e19a11a43a38ac5f6d0e2f1674, type: 2}
-  - {fileID: 11400000, guid: 95930f0c01de34f4fa80dd90bb564dbf, type: 2}
-  - {fileID: 11400000, guid: 634cfd3ff893a4609be35a7fd780a8d7, type: 2}
-  - {fileID: 11400000, guid: adbb0f4f1abcc4aad8210aaf952f236d, type: 2}
-  - {fileID: 11400000, guid: e73f0b33133b14817b85f0ce29004193, type: 2}
-  - {fileID: 11400000, guid: 2534c038ccc5644389ff2893179e2252, type: 2}

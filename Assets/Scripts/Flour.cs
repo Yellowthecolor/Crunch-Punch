@@ -10,6 +10,8 @@ public class Flour : PowerUp
     [SerializeField] float timeChange;
     [SerializeField] int dropChance;
     [SerializeField] Sprite sprite;
+    [SerializeField] string displayText = "Sugar Pills\nI'm Not Fast You're Just Slow\n...Maybe Both";
+
 
 
     public override void PowerBuff(GameObject target)
@@ -27,6 +29,11 @@ public class Flour : PowerUp
     public override int GetDropChance()
     {
         return dropChance;
+    }
+
+    public override string GetItemString()
+    {
+        return displayText;
     }
 
     public override Sprite GetItemSprite(){

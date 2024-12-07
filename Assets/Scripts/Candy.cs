@@ -9,6 +9,8 @@ public class Candy : PowerUp
     [SerializeField] float damageReduction;
     [SerializeField] int dropChance;
     [SerializeField] Sprite sprite;
+    [SerializeField] string displayText = "You Can't Feel Jack";
+
 
 
     public override void PowerBuff(GameObject target)
@@ -24,6 +26,11 @@ public class Candy : PowerUp
     public override int GetDropChance()
     {
         return dropChance;
+    }
+
+    public override string GetItemString()
+    {
+        return displayText;
     }
 
     public override Sprite GetItemSprite(){

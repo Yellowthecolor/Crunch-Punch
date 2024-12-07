@@ -10,6 +10,7 @@ public class Leaf : PowerUp
     [SerializeField] float healthRegenBonus;
     [SerializeField] int dropChance;
     [SerializeField] Sprite sprite;
+    [SerializeField] string displayText = "Maple Leaf\nBring Me A Higher Love";
 
 
 
@@ -26,6 +27,11 @@ public class Leaf : PowerUp
     public override int GetDropChance()
     {
         return dropChance;
+    }
+
+    public override string GetItemString()
+    {
+        return displayText;
     }
 
     public override Sprite GetItemSprite(){

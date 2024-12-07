@@ -8,10 +8,14 @@ public class PickUp : MonoBehaviour
 
     [SerializeField] float duration;
 
+    [SerializeField] AudioSource sfxPlayer;
+    [SerializeField] AudioClip pickUpClip;
+
 
     private void OnTriggerEnter2D(Collider2D other)
     {
         if (other.gameObject.tag == "Player"){
+            sfxPlayer.PlayOneShot(pickUpClip);
             GetComponent<Collider2D>().enabled = false;
             GetComponent<SpriteRenderer>().enabled = false;
             StartCoroutine(PowerDuration(other.gameObject));

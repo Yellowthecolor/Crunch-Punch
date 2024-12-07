@@ -10,5 +10,7 @@ public abstract class PowerUp : ScriptableObject
 
     public abstract int GetDropChance();
 
+    public abstract string GetItemString();
+
     public abstract Sprite GetItemSprite();
 }
