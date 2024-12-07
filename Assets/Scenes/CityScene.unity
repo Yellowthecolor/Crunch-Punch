@@ -3508,6 +3508,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
+    - target: {fileID: 4218712755769125678, guid: 722f18878ce1a4b1c9859a594d1939cb, type: 3}
+      propertyPath: m_Color.a
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7969239500606952723, guid: 722f18878ce1a4b1c9859a594d1939cb, type: 3}
       propertyPath: m_LocalPosition.x
       value: -10.225
@@ -3708,6 +3712,10 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 53048213}
+    - target: {fileID: 2315027551460124531, guid: cf7bc817ad1774d6e9e0e0d428a73878, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: MainMenu
+      objectReference: {fileID: 0}
     - target: {fileID: 3980190442239094032, guid: cf7bc817ad1774d6e9e0e0d428a73878, type: 3}
       propertyPath: m_AnchorMax.x
       value: 0
@@ -3891,7 +3899,7 @@ PrefabInstance:
       objectReference: {fileID: 1771173056}
     - target: {fileID: 6118137256718380081, guid: 6813f83f2180c44eab4e313f3e6e457f, type: 3}
       propertyPath: timeLimit
-      value: 600
+      value: 120
       objectReference: {fileID: 0}
     - target: {fileID: 6118137256718380081, guid: 6813f83f2180c44eab4e313f3e6e457f, type: 3}
       propertyPath: timerText

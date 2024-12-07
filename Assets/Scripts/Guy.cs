@@ -16,6 +16,9 @@ public class Guy : MonoBehaviour
     [SerializeField] float healthRegen;
     [SerializeField] float healthRegenBonus = 0;
     [SerializeField] float damageReduction = 1;
+    [SerializeField] bool  isInvulnerable = false;
+    [SerializeField] float invulnerableDuration = 3f;
+
 
     bool isDead = false;
     [SerializeField] float speed;
@@ -40,6 +43,7 @@ public class Guy : MonoBehaviour
     [SerializeField] LayerMask opponentLayer;
     [SerializeField] bool blockButtonValue;
     [SerializeField] bool inDamageState;
+    [SerializeField] float knockBackDuration = 1f;
 
     [Header("Animation States")]
     [SerializeField] String walk = "Walk";
@@ -50,7 +54,7 @@ public class Guy : MonoBehaviour
     [SerializeField] String death = "Death";
     [SerializeField] String damaged = "Damage";
     [SerializeField] String dead = "Dead";
-    String currentAnimationState = "Idle";
+    [SerializeField] String currentAnimationState = "Idle";
 
     [Header("Audio")]
     [SerializeField] AudioSource sfxPlayer;
@@ -150,13 +154,12 @@ public class Guy : MonoBehaviour
     }
 
     public void BlockAnimation(){
-        if (currentAnimationState == punch || currentAnimationState == kick || currentAnimationState == damaged){
-            return;
-        }
         if (blockButtonValue){
             currentAnimationState = block;
+            isInvulnerable = true;
         } 
         if (!blockButtonValue && currentAnimationState == block){
+            isInvulnerable = false;
             currentAnimationState = idle;
             animationStateChanger.TriggerAnimation(idle);
         }
@@ -198,15 +201,14 @@ public class Guy : MonoBehaviour
     }
 
     public void TakeDamage(float damage, Transform opponent){
-        if (tag == "Player" && 
-        (currentAnimationState == block 
-        || currentAnimationState == damaged)){
+        if (isInvulnerable){
             return;
         }
  
         DamageAnimation();
         currentHealth -= damage * damageReduction;
         if (tag == "Player"){
+            StartCoroutine(Invulnerable());
             GetComponent<HealthBar>().SetHealthBar();
         }
         
@@ -232,16 +234,10 @@ public class Guy : MonoBehaviour
 
     // Called from animation
     void DisableGuy(){
-        GetComponent<Collider2D>().enabled = false;
         GetComponent<DropTable>().InstantiateDrop(transform.position);
         currentHealth = maxHealth;
         EnemySpawner.singleton.DecreaseGuysSpawned();
         gameObject.SetActive(false);
-    }
-    
-    void OnDestroy()
-    {
-        CityManager.singleton.RemoveGuy(this);
     }
 
     public void ResetSpeed(){
@@ -313,13 +309,28 @@ public class Guy : MonoBehaviour
     }
 
     public IEnumerator Knockback(float pushBack, Transform opponent) { 
-        while(inDamageState && tag != "Player") {
-            canMove = false;
+        float timeDuration = 0f;
+        while(timeDuration < knockBackDuration) {
+            if (tag != "Player"){
+                canMove = false;
+            }
+            movement = Vector2.zero;
             Vector3 direction = (opponent.transform.position - this.transform.position).normalized;
             rigidBody.AddForce(-direction.normalized * pushBack, ForceMode2D.Impulse);
             yield return new WaitForFixedUpdate();
+            timeDuration += Time.fixedDeltaTime;
         } 
         canMove = true;
+    }
+
+    public IEnumerator Invulnerable(){
+            isInvulnerable = true;
+            currentAnimationState = idle;
+            animationStateChanger.TriggerAnimation(idle);
+            GetComponent<SpriteRenderer>().color = new Color(255,255,255,150);
+            yield return new WaitForSeconds(invulnerableDuration);
+            GetComponent<SpriteRenderer>().color = new Color(255,255,255,255);
+            isInvulnerable = false;
     }
   
     void OnDrawGizmosSelected()
