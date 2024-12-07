@@ -9,9 +9,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3c10aa494ce5e4c24970334fecc897f7, type: 3}
-  m_Name: Syringe
+  m_Script: {fileID: 11500000, guid: d5cb62303b1a6451b9a9c99152c18020, type: 3}
+  m_Name: Candy Lesser
   m_EditorClassIdentifier: 
-  strengthBonus: 1
-  dropChance: 20
-  sprite: {fileID: 21300000, guid: 79ff783a6bf1e40cab47818fcf0b0403, type: 3}
+  damageReduction: 0.7
+  dropChance: 30
+  sprite: {fileID: 21300000, guid: eb1f499d1a2c646d79f2bb236ee1775b, type: 3}

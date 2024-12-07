@@ -9,18 +9,6 @@ public class InputHandler : MonoBehaviour
 
     [SerializeField] Guy playerGuy;
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {        
-         
-    }
-
     void FixedUpdate(){
         if(playerGuy.GetDeathStatus()){
             return;
@@ -38,9 +26,6 @@ public class InputHandler : MonoBehaviour
             playerGuy.SetBlockValue(false);
         }
         playerGuy.BlockAnimation();
-
-
-
 
         Vector3 move = new Vector3(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
         move = move.normalized;

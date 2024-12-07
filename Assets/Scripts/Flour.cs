@@ -4,12 +4,15 @@ using UnityEngine;
 
 [CreateAssetMenu(menuName = "PowerUps/Flour")]
 
-public class Flour : PowerUP
+public class Flour : PowerUp
 {
     [SerializeField] float speedBonus;
     [SerializeField] float timeChange;
+    [SerializeField] int dropChance;
+    [SerializeField] Sprite sprite;
 
-    public override void PowerUp(GameObject target)
+
+    public override void PowerBuff(GameObject target)
     {
         target.GetComponent<Guy>().SetDefaultSpeed(speedBonus);
         Time.timeScale = timeChange;
@@ -19,5 +22,14 @@ public class Flour : PowerUP
     {
         target.GetComponent<Guy>().SetDefaultSpeed(-speedBonus);
         Time.timeScale = 1f;
+    }
+
+    public override int GetDropChance()
+    {
+        return dropChance;
+    }
+
+    public override Sprite GetItemSprite(){
+        return sprite;
     }
 }

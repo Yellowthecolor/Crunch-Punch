@@ -13,7 +13,10 @@ public class SettingsMenu : MonoBehaviour
     [SerializeField] AudioMixer masterMixer;
     [SerializeField] Slider masterSlider;
     [SerializeField] Slider musicSlider;
-    [SerializeField] Slider sfxSlider;
+    [SerializeField] Slider playerSfxSlider;
+    [SerializeField] Slider enemySfxSlider;
+    [SerializeField] Slider pickUpSfxSlider;
+
     [SerializeField] TMP_Dropdown resolutionDropdown;
 
     List<string> resolutions = new List<string>();
@@ -45,7 +48,15 @@ public class SettingsMenu : MonoBehaviour
     }
 
     public void SetSFXVolume(){
-        masterMixer.SetFloat("SFXVolume", sfxSlider.value);
+        masterMixer.SetFloat("PlayerSFXVolume", playerSfxSlider.value);
+    }
+
+    public void SetEnemySFXVolume(){
+        masterMixer.SetFloat("EnemySFXVolume", enemySfxSlider.value);
+    }
+
+    public void SetPickUpSFXVolume(){
+        masterMixer.SetFloat("PickUpSFXVolume", pickUpSfxSlider.value);
     }
 
     public void ToggleFullScreen(bool fullScreenToggle){

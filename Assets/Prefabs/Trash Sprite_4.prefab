@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &4107501234407189920
+--- !u!1 &5133312063158560521
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,39 +8,38 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 2844691384208544355}
-  - component: {fileID: 4924228462812649013}
-  - component: {fileID: 632940424689943147}
-  - component: {fileID: 2659307695344920632}
+  - component: {fileID: 7421663597742584566}
+  - component: {fileID: 6879117716622417557}
+  - component: {fileID: 2692132825019798933}
   m_Layer: 0
-  m_Name: Candy
+  m_Name: Trash Sprite_4
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &2844691384208544355
+--- !u!4 &7421663597742584566
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4107501234407189920}
+  m_GameObject: {fileID: 5133312063158560521}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -11.9047365, y: 2.6815572, z: 0}
-  m_LocalScale: {x: 1.4107597, y: 1.4107597, z: 1.4107597}
-  m_ConstrainProportionsScale: 0
+  m_LocalPosition: {x: -25.083, y: 6.956, z: 0}
+  m_LocalScale: {x: 0.61, y: 0.61, z: 0.61}
+  m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!212 &4924228462812649013
+--- !u!212 &6879117716622417557
 SpriteRenderer:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4107501234407189920}
+  m_GameObject: {fileID: 5133312063158560521}
   m_Enabled: 1
   m_CastShadows: 0
   m_ReceiveShadows: 0
@@ -72,41 +71,27 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: 2120822295
+  m_SortingLayer: 1
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: eb1f499d1a2c646d79f2bb236ee1775b, type: 3}
+  m_Sprite: {fileID: 1962052388, guid: 132535fa348f045169d7b0d5d2e43fbc, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 0.45, y: 0.36}
+  m_Size: {x: 0.984375, y: 0.828125}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &632940424689943147
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4107501234407189920}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 388a252e7569140b29cf88d2d8641e23, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  powerUP: {fileID: 11400000, guid: c8d6c5fcb85be4f71b32bafd1ce66a2d, type: 2}
-  duration: 4
---- !u!61 &2659307695344920632
+--- !u!61 &2692132825019798933
 BoxCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4107501234407189920}
+  m_GameObject: {fileID: 5133312063158560521}
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
@@ -129,19 +114,19 @@ BoxCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: 0, y: -0.2}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 0.45, y: 0.36}
-    newSize: {x: 0.45, y: 0.36}
+    pivot: {x: 0.715, y: 0.355}
+    oldSize: {x: 0.984375, y: 0.828125}
+    newSize: {x: 0.984375, y: 0.828125}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.45, y: 0.36}
+  m_Size: {x: 0.44, y: 0.15}
   m_EdgeRadius: 0

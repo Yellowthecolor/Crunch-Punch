@@ -17,6 +17,7 @@ public class CityManager : MonoBehaviour
     [SerializeField] List<Guy> guys;
     [SerializeField] Guy playerGuy;
     [SerializeField] float timeLimit;
+    [SerializeField] bool isGameOver = false;
     float currentTime = 0;
 
     [Header("Helpers")]
@@ -24,6 +25,7 @@ public class CityManager : MonoBehaviour
     [SerializeField] GameObject gameOverPanel;
 
     void Awake(){
+        isGameOver = false;
         gameOverPanel.SetActive(false);
         guys = new List<Guy>();
         if (singleton == null){
@@ -31,6 +33,7 @@ public class CityManager : MonoBehaviour
         } else {
             Destroy(this.gameObject);
         }
+        RegisterGuy(playerGuy);
         StartCoroutine(GlobalTimerRoutine());
     }
 
@@ -44,6 +47,10 @@ public class CityManager : MonoBehaviour
 
     public List<Guy> GetGuys(){
         return guys;
+    }
+
+    public Guy GetPlayerGuy(){
+        return playerGuy;
     }
 
     public void DestroyAllGuys(){
@@ -71,6 +78,7 @@ public class CityManager : MonoBehaviour
             //this doessnt work for sosme reason
             // gameOverPanel.GetComponent<TextMeshProUGUI>().text = "You Survived!";
         } 
+        isGameOver=true;
         gameOverPanel.SetActive(true);
 
     }
@@ -82,6 +90,10 @@ public class CityManager : MonoBehaviour
     public void RestartGame(){
         DestroyAllGuys();
         SceneManager.LoadScene("CityScene");
+    }
+
+    public bool GetIsGameOver(){
+        return isGameOver;
     }
 
 }

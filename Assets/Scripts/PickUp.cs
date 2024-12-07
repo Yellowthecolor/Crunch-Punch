@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class PickUp : MonoBehaviour
 {
-    [SerializeField] PowerUP powerUP;
+    [SerializeField] PowerUp powerUp;
+
     [SerializeField] float duration;
 
 
@@ -19,9 +20,13 @@ public class PickUp : MonoBehaviour
 
 
     IEnumerator PowerDuration(GameObject guy){
-        powerUP.PowerUp(guy.gameObject);
+        powerUp.PowerBuff(guy.gameObject);
         yield return new WaitForSeconds(duration);
-        powerUP.PowerDown(guy.gameObject);
+        powerUp.PowerDown(guy.gameObject);
         Destroy(gameObject);
+    }
+
+    public void SetPowerUp(PowerUp newPowerUp){
+        powerUp = newPowerUp;
     }
 }

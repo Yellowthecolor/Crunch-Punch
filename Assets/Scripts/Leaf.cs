@@ -5,11 +5,15 @@ using UnityEngine;
 
 [CreateAssetMenu(menuName = "PowerUps/Leaf")]
 
-public class Leaf : PowerUP
+public class Leaf : PowerUp
 {
     [SerializeField] float healthRegenBonus;
+    [SerializeField] int dropChance;
+    [SerializeField] Sprite sprite;
 
-    public override void PowerUp(GameObject target)
+
+
+    public override void PowerBuff(GameObject target)
     {
         target.GetComponent<Guy>().SetHealthRegenBonus(healthRegenBonus);
     }
@@ -17,5 +21,14 @@ public class Leaf : PowerUP
     public override void PowerDown(GameObject target)
     {
         target.GetComponent<Guy>().SetHealthRegenBonus(-healthRegenBonus);
+    }
+
+    public override int GetDropChance()
+    {
+        return dropChance;
+    }
+
+    public override Sprite GetItemSprite(){
+        return sprite;
     }
 }

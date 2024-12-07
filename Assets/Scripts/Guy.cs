@@ -4,11 +4,11 @@ using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Guy : MonoBehaviour
 {
     Rigidbody2D rigidBody;
-
 
     [Header("Stats")]
     [SerializeField] float maxHealth = 100;
@@ -52,6 +52,11 @@ public class Guy : MonoBehaviour
     [SerializeField] String dead = "Dead";
     String currentAnimationState = "Idle";
 
+    [Header("Audio")]
+    [SerializeField] AudioSource sfxPlayer;
+    [SerializeField] AudioClip[] kickClips;
+    [SerializeField] AudioClip[] punchClips;
+
 
     // Start is called before the first frame update
     void Awake()
@@ -60,7 +65,6 @@ public class Guy : MonoBehaviour
     }
 
     void Start(){
-        CityManager.singleton.RegisterGuy(this);
         speed = defaultSpeed;
         currentHealth = maxHealth;
     }
@@ -115,8 +119,14 @@ public class Guy : MonoBehaviour
     }
 
     public void PassiveRegen(){
-        healthRegen = (maxHealth - currentHealth)/10 + healthRegenBonus;
-        currentHealth += healthRegen;
+        if (currentHealth < maxHealth){
+            healthRegen = (maxHealth - currentHealth)/10 + healthRegenBonus;
+            currentHealth += healthRegen;
+            if (currentHealth > maxHealth){
+                currentHealth = maxHealth;
+            }
+        }
+
     }
 
     public void PunchAnimation(){
@@ -155,6 +165,8 @@ public class Guy : MonoBehaviour
     }
 
     public void Punch(){
+        AudioClip selectRandomPunchSound = punchClips[UnityEngine.Random.Range(0, punchClips.Length)];
+        sfxPlayer.PlayOneShot(selectRandomPunchSound);
         Collider2D[] hitOpponent = Physics2D.OverlapCircleAll(punchPoint.position, punchRange, opponentLayer);
         foreach(Collider2D opponent in hitOpponent){
             opponent.GetComponent<Guy>().TakeDamage(punchDamage * damageMultiplier, this.transform);
@@ -162,6 +174,8 @@ public class Guy : MonoBehaviour
     }
 
     public void Kick(){
+        AudioClip selectRandomKickSound = kickClips[UnityEngine.Random.Range(0, kickClips.Length)];
+        sfxPlayer.PlayOneShot(selectRandomKickSound);
         Collider2D[] hitOpponent = Physics2D.OverlapCircleAll(kickPoint.position, kickRange, opponentLayer);
         foreach(Collider2D opponent in hitOpponent){
             opponent.GetComponent<Guy>().TakeDamage(kickDamage * damageMultiplier, this.transform);
@@ -192,6 +206,10 @@ public class Guy : MonoBehaviour
  
         DamageAnimation();
         currentHealth -= damage * damageReduction;
+        if (tag == "Player"){
+            GetComponent<HealthBar>().SetHealthBar();
+        }
+        
 
         StartCoroutine(Knockback(knockbackMultiplier, opponent));
 
@@ -203,6 +221,7 @@ public class Guy : MonoBehaviour
                 CityManager.singleton.GameOver();
                 DeadAnimation();
             } else {
+                knockbackMultiplier = 0;
                 DeathAnimation();
                 DeadAnimation();
             }
@@ -211,8 +230,13 @@ public class Guy : MonoBehaviour
         movement = Vector3.zero;
     }
 
-    void DestroyGuy(){
-        Destroy(gameObject);
+    // Called from animation
+    void DisableGuy(){
+        GetComponent<Collider2D>().enabled = false;
+        GetComponent<DropTable>().InstantiateDrop(transform.position);
+        currentHealth = maxHealth;
+        EnemySpawner.singleton.DecreaseGuysSpawned();
+        gameObject.SetActive(false);
     }
     
     void OnDestroy()
@@ -271,6 +295,10 @@ public class Guy : MonoBehaviour
         return currentHealth;
     }
 
+    public float GetMaxHealth(){
+        return maxHealth;
+    }
+
     public void SetInDamageStateBool(){
         if (GetCurrentHealth() > 0){
             inDamageState = !inDamageState;
@@ -285,7 +313,7 @@ public class Guy : MonoBehaviour
     }
 
     public IEnumerator Knockback(float pushBack, Transform opponent) { 
-        while(inDamageState) {
+        while(inDamageState && tag != "Player") {
             canMove = false;
             Vector3 direction = (opponent.transform.position - this.transform.position).normalized;
             rigidBody.AddForce(-direction.normalized * pushBack, ForceMode2D.Impulse);
